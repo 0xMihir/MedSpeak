@@ -23,14 +23,12 @@ We designed a **deep-learning-based recommendation system** for features within 
 We implemented the ML backend using **Flask in Python**. The main structure and logic were done in **Node.js** within the **Svelte** framework. We designed the UI and front-end layout in Svelte to create something easy to navigate and use in time-sensitive situations. We designed the left panel to be the conversation visualizer, along with an option to record sound (see "What's next for MedSpeak"). The right panel holds the prompt list, which updates in real time as more information is fed in.
 
 ## Set Up and Run Instructions
-```
 
 - Install Requirements
 ```
 pip install -r /backend-ml/requirements.txt
 ```
 - Install node version greater than 16
-```
-Run app according to directions in the ./frontend
-```
+- Run app according to directions in the ./frontend
+
 
