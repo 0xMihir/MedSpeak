@@ -35,11 +35,16 @@ def embedding_from_string_list(
         embeddings_list.append(embeddings_raw[i]['embedding'])
     return embeddings_list
 
-def retrieve_rankings_per_string( original_data_string_list,#: list[str], #data to be queried against
-                                        index_of_source_string: int, # index to be queried
+def retrieve_rankings_per_string( text_block: str, # query data
+                                        key_features, # list of strings; data quiried against
                                         k_nearest_neighbors: int = 2,
                                         model=EMBEDDING_MODEL,
                                     ): #-> list[int]:
+    
+    original_data_string_list = [text_block] + key_features
+    index_of_source_string = 0
+
+
     # get embeddings for all strings
     embeddings = embedding_from_string_list(original_data_string_list)
     # get the embedding of the source string
@@ -216,11 +221,13 @@ def retrieve_rankings_per_string( original_data_string_list,#: list[str], #data 
 
 
 features_existing_records_raw = "body, weight, bmi, height, medical history, hypertension, shortness of breath, covid"
-features_transcript_extraction = "coughing"
 inputs = features_existing_records_raw.split(", ")
 print(inputs)
 
 import numpy as np
 indices = np.zeros(len(inputs), dtype=int).tolist()
 
-retrieve_rankings_per_string(inputs, 1, k_nearest_neighbors=4)
+# retrieve_rankings_per_string(inputs, 1, k_nearest_neighbors=4, want_print=True)
+
+retrieve_rankings_per_string(inputs[0], inputs[1:], 2)
+
