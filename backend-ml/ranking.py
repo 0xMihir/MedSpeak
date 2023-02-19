@@ -4,7 +4,7 @@ import openai
 EMBEDDING_MODEL = "text-embedding-ada-002"
 
 ##sdfjsdlfksfklsd
-openai.api_key = ""
+openai.api_key = "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"
 
 
 from openai.embeddings_utils import (
@@ -26,6 +26,7 @@ def embedding_from_string_list(
     model: str = EMBEDDING_MODEL
                                 ) -> list:
     """Return embedding of given string in format [{'embedding}:[2,3], {..}, ..]"""
+    print("string_list", string_list)
     embeddings_raw = get_embedding(string_list, model)
 
     #post processing [{'embedding}:[2,3], {..}, ..] into multi-d list
@@ -43,6 +44,8 @@ def retrieve_rankings_per_string( original_data_string_list,#: list[str], #data 
     final_results = []
 
     result_embeddings = embedding_from_string_list(original_data_string_list)
+    print("result_embeddings length: ",len(result_embeddings))
+    print("result_embeddings[0] type: ",type(result_embeddings[0]))
 
     for idx in range(len(result_embeddings)):
         # get embeddings for all strings
