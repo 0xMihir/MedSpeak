@@ -33,56 +33,103 @@ class PatientFHIR:
 
         for resource in resources:
             if type(resource) == Condition:
+                condition = {
+                    # "name": resource.code.text,
+                    "date": resource.onsetDateTime,
+                }
                 if resource.code.text in self.conditions:
-                    self.conditions[resource.code.text].append(resource)
+                    self.conditions[resource.code.text].append(condition)
                 else:
-                    self.conditions[resource.code.text] = [resource]
+                    self.conditions[resource.code.text] = [condition]
             elif type(resource) == Encounter:
+                encounter = {
+                    # "name": resource.type[0].text,
+                    "date": resource.period.start,
+                    # "location": resource.location[0].location.display,
+                    # "reason": resource.reasonCode[0].text,
+                }
+
                 if resource.type[0].text in self.encounters:
-                    self.encounters[resource.type[0].text].append(resource)
+                    self.encounters[resource.type[0].text].append(encounter)
                 else:
-                    self.encounters[resource.type[0].text] = [resource]
+                    self.encounters[resource.type[0].text] = [encounter]
             elif type(resource) == Immunization:
+                immunization = { 
+                    # "name": resource.vaccineCode.text,
+                    "date": resource.occurrenceDateTime,
+                }
+
                 if resource.vaccineCode.text in self.immunizations:
                     self.immunizations[resource.vaccineCode.text].append(
-                        resource)
+                        immunization)
                 else:
-                    self.immunizations[resource.vaccineCode.text] = [resource]
+                    self.immunizations[resource.vaccineCode.text] = [immunization]
             elif type(resource) == MedicationRequest:
+                medication = {
+                    # "name": resource.medicationCodeableConcept.text,
+                    "date": resource.authoredOn,
+                }
+
+                # if resource.dosageInstruction[0]: 
+                    # medication["dosage"] = resource.dosageInstruction[0].doseAndRate[0].doseQuantity.value
+                    # medication["unit"] = resource.dosageInstruction[0].doseAndRate[0].doseQuantity.unit
+
                 if resource.medicationCodeableConcept.text in self.medications:
                     self.medications[resource.medicationCodeableConcept.text].append(
-                        resource)
+                        medication)
                 else:
                     self.medications[resource.medicationCodeableConcept.text] = [
-                        resource]
+                        medication]
             elif type(resource) == Procedure:
+                procedure = {
+                    # "name": resource.code.text,
+                    "date": resource.performedPeriod.start,
+                }
                 if resource.code.text in self.procedures:
-                    self.procedures[resource.code.text].append(resource)
+                    self.procedures[resource.code.text].append(procedure)
                 else:
-                    self.procedures[resource.code.text] = [resource]
+                    self.procedures[resource.code.text] = [procedure]
             elif type(resource) == Observation:
+                observation = {
+                    # "name": resource.code.text,
+                    "date": resource.effectiveDateTime,
+                }
+
+                if resource.valueQuantity:
+                    observation["value"] = resource.valueQuantity.value
+                    observation["unit"] = resource.valueQuantity.unit
+
+                if resource.component:
+                    observation["components"] = []
+                    for component in resource.component:
+                        observation["components"].append({
+                            "name": component.code.text,
+                            "value": component.valueQuantity.value,
+                            "unit": component.valueQuantity.unit,
+                        })
+
                 if resource.code.text in self.observations:
-                    self.observations[resource.code.text].append(resource)
+                    self.observations[resource.code.text].append(observation)
                 else:
-                    self.observations[resource.code.text] = [resource]
+                    self.observations[resource.code.text] = [observation]
 
     def getConditionList(self):
-        return self.conditions.keys()
+        return list(self.conditions.keys())
 
     def getEncounterList(self):
-        return self.encounters.keys()
+        return list(self.encounters.keys())
 
     def getImmunizationList(self):
-        return self.immunizations.keys()
+        return list(self.immunizations.keys())
 
     def getMedicationList(self):
-        return self.medications.keys()
+        return list(self.medications.keys())
 
     def getProcedureList(self):
-        return self.procedures.keys()
+        return list(self.procedures.keys())
 
     def getObservationList(self):
-        return self.observations.keys()
+        return list(self.observations.keys())
 
     def getCondition(self, condition):
         return self.conditions[condition]

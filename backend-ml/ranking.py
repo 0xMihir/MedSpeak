@@ -57,6 +57,9 @@ def retrieve_rankings_per_string( text_block: str, # query data
     # get indices of nearest neighbors (function from embeddings_utils.py)
     indices_of_nearest_neighbors = indices_of_nearest_neighbors_from_distances(distances)
 
+    indices_of_nearest_neighbors = [int(n - 1) for n in indices_of_nearest_neighbors[1:]]
+
+
     # print out source string
     query_string = original_data_string_list[index_of_source_string]
     if want_print:
@@ -79,5 +82,6 @@ def retrieve_rankings_per_string( text_block: str, # query data
             String: {original_data_string_list[i]}
             Distance: {distances[i]:0.3f}"""
             )
+
 
     return indices_of_nearest_neighbors
