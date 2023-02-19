@@ -39,6 +39,7 @@ def retrieve_rankings_per_string( text_block: str, # query data
                                         key_features, # list of strings; data quiried against
                                         k_nearest_neighbors: int = 2,
                                         model=EMBEDDING_MODEL,
+                                        want_print=False
                                     ): #-> list[int]:
     
     original_data_string_list = [text_block] + key_features
@@ -56,25 +57,26 @@ def retrieve_rankings_per_string( text_block: str, # query data
 
     # print out source string
     query_string = original_data_string_list[index_of_source_string]
-    print(f"Source string: {query_string}")
-    # print out its k nearest neighbors
-    k_counter = 0
-    for i in indices_of_nearest_neighbors:
-        # skip any strings that are identical matches to the starting string
-        if query_string == original_data_string_list[i]:
-            continue
-        # stop after printing out k articles
-        if k_counter >= k_nearest_neighbors:
-            break
-        k_counter += 1
+    if want_print:
+        print(f"Source string: {query_string}")
+        # print out its k nearest neighbors
+        k_counter = 0
+        for i in indices_of_nearest_neighbors:
+            # skip any strings that are identical matches to the starting string
+            if query_string == original_data_string_list[i]:
+                continue
+            # stop after printing out k articles
+            if k_counter >= k_nearest_neighbors:
+                break
+            k_counter += 1
 
-        # print out the similar strings and their distances
-        print(
-            f"""
-        --- Recommendation #{k_counter} (nearest neighbor {k_counter} of {k_nearest_neighbors}) ---
-        String: {original_data_string_list[i]}
-        Distance: {distances[i]:0.3f}"""
-        )
+            # print out the similar strings and their distances
+            print(
+                f"""
+            --- Recommendation #{k_counter} (nearest neighbor {k_counter} of {k_nearest_neighbors}) ---
+            String: {original_data_string_list[i]}
+            Distance: {distances[i]:0.3f}"""
+            )
 
     return indices_of_nearest_neighbors
 
