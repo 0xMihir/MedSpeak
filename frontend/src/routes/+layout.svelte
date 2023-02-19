@@ -22,5 +22,6 @@
         flex: 1;
         flex-direction: row;
         width: 100%;
+        min-height: 0;
     }
 </style>
