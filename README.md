@@ -5,7 +5,7 @@ MedSpeak is a full stack Svelte + Flask web app that uses deep learning to strea
 
 ![](./demo.png)
 
-## What it does
+## Introduction
 
 Our web application consists of two main functionalities: a **conversation visualizer** and a **ranked prompt list**. 
 
@@ -14,7 +14,7 @@ The conversation visualizer takes in a transcript of a recording of the interact
 The ranked prompt list pulls the most relevant past information for the patient to the forefront of the list, making it easy for the physician to ask better clarifying questions or make adjustments to their mental model, all without having to click and scroll through tens or hundreds of records.
 
 
-## How we built it
+## Design
 
 Our end goal is to help doctors efficiently filter and prioritize patient data, so each aspect of our process (ML, backend, frontend) attempts to address that in some way.
 
