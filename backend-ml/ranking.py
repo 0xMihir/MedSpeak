@@ -4,8 +4,6 @@ import openai
 
 # constants
 EMBEDDING_MODEL = "text-embedding-ada-002"
-
-##sdfjsdlfksfklsd
 openai.api_key = config.get("OPENAI_API_KEY")
 
 
@@ -50,15 +48,17 @@ def retrieve_rankings_per_string( text_block: str, # query data
 
     # get embeddings for all strings
     embeddings = embedding_from_string_list(original_data_string_list)
+    
     # get the embedding of the source string
     query_embedding = embeddings[index_of_source_string]
+    
     # get distances between the source embedding and other embeddings (function from embeddings_utils.py)
     distances = distances_from_embeddings(query_embedding, embeddings, distance_metric="cosine")
+    
     # get indices of nearest neighbors (function from embeddings_utils.py)
     indices_of_nearest_neighbors = indices_of_nearest_neighbors_from_distances(distances)
 
     indices_of_nearest_neighbors = [int(n - 1) for n in indices_of_nearest_neighbors[1:]]
-
 
     # print out source string
     query_string = original_data_string_list[index_of_source_string]
