@@ -29,6 +29,6 @@ We implemented the ML backend using **Flask in Python**. The main structure and 
 pip install -r /backend-ml/requirements.txt
 ```
 - Install node version greater than 16
-- Run app according to directions in the ./frontend
+- Run app according to directions under the ![front-end directory](./frontend/)
 
 
